@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YONZ STORE OFFICIAL - Layanan Digital</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Warna Ungu yang Digunakan: */
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #154563; 
+            
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            min-height: 100vh;
+            color: #fff;
+            position: relative;
+            overflow: hidden; 
+        }
+
+        /* -------------------------- */
+        /* GAYA VIDEO LATAR BELAKANG */
+        /* -------------------------- */
+
+        #video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            background-size: cover;
+            transform: translateX(calc((100% - 100vw) / 2));
+            transition: opacity 0.5s ease; /* Transisi untuk efek ganti video */
+        }
+
+        /* Overlay gelap untuk kontras teks */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -99;
+        }
+
+        /* -------------------------- */
+        /* GAYA KONTEN (TAMPILAN DEPAN) */
+        /* -------------------------- */
+
+        .container {
+            width: 90%;
+            max-width: 450px; 
+            margin-top: 40px; 
+            background-color: rgba(0, 0, 0, 0.65);
+            padding: 20px;
+            border-radius: 15px; 
+            box-sizing: border-box;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); 
+            z-index: 1;
+        }
+        
+        /* Pembungkus untuk teks bergerak (marquee) */
+        .header-wrapper {
+            background-color: #38116b;
+            padding: 5px 0;
+            margin-bottom: 25px;
+            overflow: hidden; 
+            white-space: nowrap; 
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .header {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #EE82EE; 
+            display: inline-block; 
+            animation: marquee 18s linear infinite; 
+            padding-right: 100%; 
+        }
+
+        /* Gaya untuk centang biru Font Awesome */
+        .verified-badge {
+            margin: 0 5px; 
+            font-size: 1em; 
+            vertical-align: middle; 
+            color: #DDA0DD; 
+            text-shadow: none; 
+        }
+
+        /* Keyframes untuk animasi marquee */
+        @keyframes marquee {
+            0% { transform: translateX(100%); } 
+            100% { transform: translateX(-100%); } 
+        }
+
+        /* Gaya Tombol Umum (Termasuk Efek Glow pada Semua Tombol) */
+        .link-button, #music-toggle, #suntik-sosmed-btn { 
+            display: block;
+            color: white;
+            padding: 15px 20px;
+            margin-bottom: 10px; 
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
+            text-align: center;
+            position: relative;
+            overflow: hidden; 
+            width: 100%; 
+            border: none; 
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        
+        /* Gaya Tombol Tautan (Ungu Solid) */
+        .link-button, #suntik-sosmed-btn {
+            background: #4B0082;
+        }
+
+        .link-button:hover, #suntik-sosmed-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            background: #6A0DAD; 
+        }
+        
+        /* EFEK PENCERAHAN UNGU PADA SEMUA TOMBOL saat DITEKAN */
+        .link-button:active, #suntik-sosmed-btn:active {
+            box-shadow: 0 0 15px 5px #EE82EE, 
+                        0 0 25px 8px rgba(238, 130, 238, 0.5); 
+            transform: translateY(0);
+            background: #6A0DAD; 
+        }
+        
+        /* Gaya Khusus Tombol Musik */
+        #music-toggle {
+            margin-bottom: 25px;
+            background: #DDA0DD;
+            color: #38116b;
+            transition: background 0.2s, color 0.2s, box-shadow 0.1s; 
+        }
+        #music-toggle:active {
+            background: #EE82EE; 
+            color: #154563; 
+        }
+
+        .emoji {
+            margin: 0 5px;
+        }
+        
+        /* GAYA UNTUK CATATAN KAKI BARU */
+        .footer-note {
+            margin-top: 25px;
+            padding: 15px;
+            border: 2px solid #DDA0DD; 
+            border-radius: 8px;
+            background-color: rgba(75, 0, 130, 0.5); 
+            font-size: 0.95em;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .footer-note strong {
+            color: #EE82EE;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="video-overlay"></div>
+    <video autoplay loop muted playsinline id="video-bg">
+        <source id="video-source" src="https://files.catbox.moe/t7prmi.mp4" type="video/mp4">
+        Browser Anda tidak mendukung tag video.
+    </video>
+    <div class="container">
+        
+        <div class="header-wrapper">
+            <div class="header">
+                <i class="fas fa-badge-check verified-badge"></i> 
+                YONZ STORE OFFICIAL 
+                <i class="fas fa-badge-check verified-badge"></i>
+                &nbsp;&nbsp;&nbsp; ✨&nbsp;&nbsp; 
+                <i class="fas fa-badge-check verified-badge"></i> 
+                YONZ STORE OFFICIAL 
+                <i class="fas fa-badge-check verified-badge"></i>
+            </div>
+        </div>
+
+        <button id="music-toggle">
+            <span class="emoji">🔇</span> PUTAR MUSIK
+        </button>
+        
+        <a href="https://wa.me/6285361384443" class="link-button" target="_blank">
+            <span class="emoji">📱</span> WHATSAPP 1
+        </a>
+        
+        <a href="https://wa.me/6281210560845?text=WhatsApp%202" class="link-button" target="_blank">
+            <span class="emoji">📱</span> WHATSAPP 2
+        </a>
+        
+        <a href="https://t.me/Yonzganteng" class="link-button" target="_blank">
+            <span class="emoji">💬</span> TELEGRAM
+        </a>
+
+        <a href="https://www.tiktok.com/@yonz___cihuy?_t=ZS-904LcWBt2CV&_r=1" class="link-button" target="_blank">
+            <span class="emoji">🎵</span> TIKTOK ADMIN <span class="emoji">🎵</span>
+        </a>
+        
+        <button id="suntik-sosmed-btn" class="link-button">
+            <span class="emoji">📈</span> SUNTIK SOSMED <span class="emoji">📈</span>
+        </button>
+        
+        <a href="https://payment-yonz-store-official.vercel.app/" class="link-button" target="_blank">
+            <span class="emoji">💳</span> PAYMENT BANK <span class="emoji">💳</span>
+        </a>
+        
+        <a href="https://jasabug-yonz-store-official.vercel.app/" class="link-button" target="_blank">
+            <span class="emoji">😈</span> JASA BUG <span class="emoji">😈</span>
+        </a>
+        
+        <a href="https://whatsapp.com/channel/0029VbAxjbM9Bb5rcxcI3q2r" class="link-button" target="_blank">
+            <span class="emoji">📢</span> CHANNEL INFORMASI
+        </a>
+        
+        <div class="footer-note">
+            <p style="margin: 0;">
+                <strong style="font-size: 1.1em;">Catatan:</strong>
+                <br>
+                Jika Nomor Tidak Aktif Bisa Saja Terkena **Kenon** (Kena Nonaktif),
+                Diharapkan untuk Chat **Nomor Kedua** Atau **Nomor Ketiga**
+                pada button di link awal. **Terimakasih!!!**
+            </p>
+        </div>
+        
+    </div>
+
+    <script>
+        const video = document.getElementById('video-bg');
+        const videoSource = document.getElementById('video-source');
+        const toggleButton = document.getElementById('music-toggle');
+        const suntikSosmedBtn = document.getElementById('suntik-sosmed-btn');
+        
+        const SUNTIK_SOSMED_URL = "https://suntik-sosmed-yonz-store-official-x.vercel.app/";
+        
+        // --- LOGIKA KONTROL AUDIO ---
+        
+        // Inisialisasi teks tombol
+        if (video.muted) {
+            toggleButton.innerHTML = `<span class="emoji">▶️</span> PUTAR MUSIK`;
+        } else {
+            toggleButton.innerHTML = `<span class="emoji">🔊</span> MATIKAN MUSIK`;
+        }
+        
+        video.play().catch(error => {
+            console.warn("Autoplay diblokir (video tetap di-mute):", error);
+        });
+
+        toggleButton.addEventListener('click', function() {
+            if (video.paused) {
+                video.play().catch(error => {
+                    console.warn("Gagal memutar video setelah klik:", error);
+                });
+            }
+
+            if (video.muted) {
+                video.muted = false;
+                toggleButton.innerHTML = `<span class="emoji">🔊</span> MATIKAN MUSIK`;
+            } else {
+                video.muted = true;
+                toggleButton.innerHTML = `<span class="emoji">▶️</span> PUTAR MUSIK`;
+            }
+        });
+
+        // --- LOGIKA GANTI VIDEO PADA TOMBOL SUNTIK SOSMED ---
+        
+        suntikSosmedBtn.addEventListener('click', function() {
+            // URL video latar belakang baru (Digunakan URL placeholder)
+            const newVideoUrl = "https://files.catbox.moe/p0g7n2.mp4"; 
+            
+            // 1. Meredupkan video latar belakang saat ini
+            video.style.opacity = '0';
+            
+            // 2. Menunggu sejenak untuk transisi, lalu mengganti URL sumber
+            setTimeout(() => {
+                // Hentikan video lama, ganti sumber, dan muat ulang
+                video.pause();
+                videoSource.src = newVideoUrl;
+                video.load(); 
+                
+                // Coba putar video baru (ini akan mempertahankan status mute/unmute yang ada)
+                video.play().catch(e => console.log("Video baru dimainkan"));
+                
+                // 3. Menghilangkan peredupan (video baru muncul)
+                video.style.opacity = '1';
+                
+            }, 500); // Tunggu 0.5 detik
+            
+            // 4. Mengarahkan ke tautan setelah efek terlihat
+            setTimeout(() => {
+                 window.open(SUNTIK_SOSMED_URL, '_blank');
+            }, 1000); // Tunggu total 1 detik sebelum redirect
+        });
+    </script>
+
+</body>
+</html>
